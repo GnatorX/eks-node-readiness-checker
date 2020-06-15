@@ -82,7 +82,7 @@ Resources:
           - UseExistingLambdaFuncRole
           - !Ref FunctionRoleArn
           - !GetAtt MyLambdaRole.Arn
-      Timeout: 50
+      Timeout: 600
       Events:
         CWE:
           Type: CloudWatchEvent
@@ -91,7 +91,7 @@ Resources:
               source:
                 - aws.autoscaling
               detail-type: 
-                -  "EC2 Instance-terminate Lifecycle Action"
+                -  "EC2 Instance-launch Lifecycle Action"
                 
   MyLambdaRole:
     Condition: NotUseExistingLambdaFuncRole
@@ -122,7 +122,6 @@ Resources:
               - Effect: Allow
                 Action:
                   - ec2:DescribeInstances
-                  - ec2:DescribeTags
                   - eks:DescribeCluster
                   - autoscaling:CompleteLifecycleAction
                 Resource: '*'

@@ -15,11 +15,9 @@ do
   # Get an event
   EVENT_DATA=$(curl -sS -LD "$HEADERS" -X GET "http://${AWS_LAMBDA_RUNTIME_API}/2018-06-01/runtime/invocation/next")
   REQUEST_ID=$(grep -Fi Lambda-Runtime-Aws-Request-Id "$HEADERS" | tr -d '[:space:]' | cut -d: -f2)
-
-  chmod +x $(echo "$_HANDLER" | cut -d. -f2).sh
   # Execute the handler function from the script
-  RESPONSE=$(./$(echo "$_HANDLER" | cut -d. -f2).sh "$EVENT_DATA")
 
+  RESPONSE=$(./main.sh "$EVENT_DATA")
 
   echo "=========[RESPONSE]======="
   echo "$RESPONSE"
